@@ -1,6 +1,8 @@
 import Error404 from 'pages/Error404';
 import Home from 'pages/Home';
+import Profile from 'pages/Profile';
 import Signin from 'pages/Signin';
+import Signup from 'pages/Signup';
 import Welcome from 'pages/Welcome';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
@@ -17,6 +19,14 @@ const AppRoutes = (): JSX.Element => {
         }
       />
       <Route
+        path="/signup"
+        element={
+          <RequireUnauth>
+            <Signup />
+          </RequireUnauth>
+        }
+      />
+      <Route
         path="/signin"
         element={
           <RequireUnauth>
@@ -29,6 +39,14 @@ const AppRoutes = (): JSX.Element => {
         element={
           <RequireAuth>
             <Home />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <RequireAuth>
+            <Profile />
           </RequireAuth>
         }
       />

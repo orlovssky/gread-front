@@ -1,14 +1,14 @@
-import { Paper, Grid, Col, TextInput, Button, PasswordInput, Title } from '@mantine/core';
+import { Paper, Grid, Col, TextInput, Button, PasswordInput, Title, Text } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { useNotifications } from '@mantine/notifications';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
-import { SignInUserModel } from 'models/auth';
+import { SignUpUserModel } from 'models/auth';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { signInUserApi } from 'services/auth';
+import { signUpUserApi } from 'services/auth';
 
-const SignIn = (): JSX.Element => {
+const SignUp = (): JSX.Element => {
   const { t } = useTranslation();
   const notifications = useNotifications();
   const navigate = useNavigate();
@@ -21,6 +21,9 @@ const SignIn = (): JSX.Element => {
   const form = useForm({
     initialValues: {
       email: '',
+      username: '',
+      firstname: '',
+      lastname: '',
       password: ''
     },
 
@@ -40,12 +43,16 @@ const SignIn = (): JSX.Element => {
   const onSubmit = () => {
     setLoading(true);
 
-    const { email, password } = form.values;
-    const user: SignInUserModel = {
+    const { email, password, username, firstname, lastname } = form.values;
+    const user: SignUpUserModel = {
       email: email,
-      password: password
+      password: password,
+      username: username ? username : null,
+      firstname: firstname ? firstname : null,
+      lastname: lastname ? lastname : null
     };
-    signInUserApi(user)
+
+    signUpUserApi(user)
       .then(({ data }) => {
         if (data && data.token) {
           localStorage.setItem('api-token', data.token);
@@ -57,17 +64,9 @@ const SignIn = (): JSX.Element => {
         }
       })
       .catch((e) => {
-        if (e.response?.status === 401 && e.response?.data?.error === 'invalid password') {
+        if (e.response?.status === 409 && e.response?.data?.error === 'this user already exists') {
           notifications.showNotification({
-            message: t('errors.invalidPassword'),
-            color: 'red'
-          });
-        } else if (
-          e.response?.status === 401 &&
-          e.response?.data?.error === 'user does not exist'
-        ) {
-          notifications.showNotification({
-            message: t('errors.userDoesNotExist'),
+            message: t('errors.userAlreadyExists'),
             color: 'red'
           });
         }
@@ -96,7 +95,7 @@ const SignIn = (): JSX.Element => {
             textAlign: 'center',
             marginBottom: '16px'
           }}>
-          <Title order={4}>{t('authorization')}</Title>
+          <Title order={4}>{t('registration')}</Title>
         </Col>
         <Col span={10} offset={1} sm={6} offsetSm={3} lg={4} offsetLg={4}>
           <form onSubmit={form.onSubmit(() => onSubmit())}>
@@ -112,6 +111,39 @@ const SignIn = (): JSX.Element => {
               variant={form.errors.email ? 'filled' : 'default'}
             />
 
+            <TextInput
+              mt="md"
+              label={t('username')}
+              value={form.values.username}
+              onChange={(event) => form.setFieldValue('username', event.currentTarget.value)}
+              disabled={loading}
+            />
+            <Text color="gray" size="xs">
+              {t('validation.optional')}
+            </Text>
+
+            <TextInput
+              mt="md"
+              label={t('firstname')}
+              value={form.values.firstname}
+              onChange={(event) => form.setFieldValue('firstname', event.currentTarget.value)}
+              disabled={loading}
+            />
+            <Text color="gray" size="xs">
+              {t('validation.optional')}
+            </Text>
+
+            <TextInput
+              mt="md"
+              label={t('lastname')}
+              value={form.values.lastname}
+              onChange={(event) => form.setFieldValue('lastname', event.currentTarget.value)}
+              disabled={loading}
+            />
+            <Text color="gray" size="xs">
+              {t('validation.optional')}
+            </Text>
+
             <PasswordInput
               mt="md"
               label={t('password')}
@@ -121,15 +153,14 @@ const SignIn = (): JSX.Element => {
               disabled={loading}
               variant={form.errors.password ? 'filled' : 'default'}
             />
-
             <div style={{ width: '100%', textAlign: 'center' }}>
               <Button type="submit" mt="xs" loading={loading}>
-                {t('signIn')}
+                {t('signUp')}
               </Button>
             </div>
             <div style={{ width: '100%', textAlign: 'center' }}>
-              <Button variant="light" mt="xs" onClick={() => goTo('signup')}>
-                {t('signUp')}
+              <Button variant="light" mt="xs" onClick={() => goTo('signin')}>
+                {t('signIn')}
               </Button>
             </div>
           </form>
@@ -138,4 +169,4 @@ const SignIn = (): JSX.Element => {
     </Paper>
   );
 };
-export default SignIn;
+export default SignUp;
