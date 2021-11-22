@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://172.104.140.150:8080/v1',
+  baseURL: 'http://172.104.140.150:8081/v1',
   headers: {
     Authorization: `Bearer ${getToken()}`
   }
