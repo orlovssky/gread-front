@@ -90,13 +90,8 @@ const Profile = (): JSX.Element => {
   return (
     <>
       <ChangePasswordModal userId={user.id} />
-      <Paper
-        radius={0}
-        sx={{
-          minHeight: '100vh',
-          paddingTop: '60px'
-        }}>
-        <Grid gutter={0} sx={{ width: '100%' }}>
+      <Paper radius={0} className="paper_full-height">
+        <Grid gutter={0} sx={{ width: '100%', marginTop: '60px' }}>
           <Col span={10} offset={1} sm={6} offsetSm={3} lg={4} offsetLg={4}>
             <form onSubmit={form.onSubmit(() => onSubmit())}>
               <TextInput

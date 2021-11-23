@@ -81,15 +81,14 @@ const SignIn = (): JSX.Element => {
   return (
     <Paper
       radius={0}
+      className="paper_full-height"
       sx={{
-        minHeight: '100vh',
-        paddingTop: '60px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%'
       }}>
-      <Grid gutter={0} sx={{ width: '100%' }}>
+      <Grid gutter={0} sx={{ width: '100%', marginTop: '60px' }}>
         <Col
           span={12}
           sx={{
@@ -128,7 +127,7 @@ const SignIn = (): JSX.Element => {
               </Button>
             </div>
             <div style={{ width: '100%', textAlign: 'center' }}>
-              <Button variant="light" mt="xs" onClick={() => goTo('signup')}>
+              <Button variant="light" my="xs" onClick={() => goTo('signup')}>
                 {t('signUp')}
               </Button>
             </div>

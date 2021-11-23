@@ -80,15 +80,14 @@ const SignUp = (): JSX.Element => {
   return (
     <Paper
       radius={0}
+      className="paper_full-height"
       sx={{
-        minHeight: '100vh',
-        paddingTop: '60px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%'
       }}>
-      <Grid gutter={0} sx={{ width: '100%' }}>
+      <Grid gutter={0} sx={{ width: '100%', marginTop: '60px' }}>
         <Col
           span={12}
           sx={{
@@ -117,6 +116,7 @@ const SignUp = (): JSX.Element => {
               value={form.values.username}
               onChange={(event) => form.setFieldValue('username', event.currentTarget.value)}
               disabled={loading}
+              variant="default"
             />
             <Text color="gray" size="xs">
               {t('validation.optional')}
@@ -128,6 +128,7 @@ const SignUp = (): JSX.Element => {
               value={form.values.firstname}
               onChange={(event) => form.setFieldValue('firstname', event.currentTarget.value)}
               disabled={loading}
+              variant="default"
             />
             <Text color="gray" size="xs">
               {t('validation.optional')}
@@ -139,6 +140,7 @@ const SignUp = (): JSX.Element => {
               value={form.values.lastname}
               onChange={(event) => form.setFieldValue('lastname', event.currentTarget.value)}
               disabled={loading}
+              variant="default"
             />
             <Text color="gray" size="xs">
               {t('validation.optional')}
@@ -159,7 +161,7 @@ const SignUp = (): JSX.Element => {
               </Button>
             </div>
             <div style={{ width: '100%', textAlign: 'center' }}>
-              <Button variant="light" mt="xs" onClick={() => goTo('signin')}>
+              <Button variant="light" my="xs" onClick={() => goTo('signin')}>
                 {t('signIn')}
               </Button>
             </div>

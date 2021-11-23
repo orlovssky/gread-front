@@ -16,13 +16,13 @@ const Home = (): JSX.Element => {
   }, []);
 
   return (
-    <Paper
-      radius={0}
-      sx={{
-        minHeight: '100vh',
-        paddingTop: '60px'
-      }}>
-      <Group direction="column" grow>
+    <Paper radius={0} className="paper_full-height">
+      <Group
+        direction="column"
+        grow
+        sx={{
+          marginTop: '60px'
+        }}>
         {links.map((link, index) => {
           return (
             <Container key={`home-links-link-${index}`}>

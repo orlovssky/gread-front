@@ -1,3 +1,17 @@
+/* [data-theme='dark'] {
+  --bg-color: #1a1b1e;
+}
+[data-theme='light'] {
+  --bg-color: #ffffff;
+}
+[data-theme='sepia'] {
+  --bg-color: #f6f1ea;
+}
+:root,
+html,
+body {
+  background-color: var(--bg-color);
+} */
 .welcome__title {
   position: absolute;
   top: 50%;
@@ -50,4 +64,16 @@
   height: 60px;
   z-index: 6;
   position: fixed;
+}
+.paper_full-height {
+  min-height: 100vh;
+}
+
+/* Safari only CSS hack */
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .paper_full-height {
+      min-height: -webkit-fill-available;
+    }
+  }
 }
