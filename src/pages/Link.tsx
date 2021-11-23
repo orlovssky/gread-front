@@ -48,7 +48,8 @@ const Link = (): JSX.Element => {
           offset={1}
           sx={{
             textAlign: 'center',
-            margin: '32px 0'
+            marginTop: '32px',
+            marginBottom: '32px'
           }}>
           <Title>{link.title}</Title>
           <Divider my="sm" />
@@ -62,16 +63,16 @@ const Link = (): JSX.Element => {
             </Text>
           </Container>
         </Col>
+        <Col span={10} offset={1}>
+          <TypographyStylesProvider className="link__content">
+            <Container
+              dangerouslySetInnerHTML={{
+                __html: `<base target="_blank" rel="noopener"> ${link.content}`
+              }}
+            />
+          </TypographyStylesProvider>
+        </Col>
       </Grid>
-      <Col span={10} offset={1}>
-        <TypographyStylesProvider className="link__content">
-          <Container
-            dangerouslySetInnerHTML={{
-              __html: `<base target="_blank" rel="noopener"> ${link.content}`
-            }}
-          />
-        </TypographyStylesProvider>
-      </Col>
     </Paper>
   );
 };
