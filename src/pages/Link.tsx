@@ -63,7 +63,7 @@ const Link = (): JSX.Element => {
             </Text>
           </Container>
         </Col>
-        <Col span={10} offset={1}>
+        <Col span={12}>
           <TypographyStylesProvider className="link__content">
             <Container
               dangerouslySetInnerHTML={{
