@@ -22,24 +22,18 @@ const Settings = (): JSX.Element => {
         if (metaTag) {
           metaTag.setAttribute('content', '#1a1b1e');
         }
-        // document.documentElement.style.setProperty('background-color', '#1a1b1e');
-        // document.documentElement.setAttribute('data-theme', 'dark');
         setCurrentTheme('dark');
         break;
       case themes.light:
         if (metaTag) {
           metaTag.setAttribute('content', '#ffffff');
         }
-        // document.documentElement.style.setProperty('background-color', '#ffffff');
-        // document.documentElement.setAttribute('data-theme', 'light');
         setCurrentTheme('light');
         break;
       case themes.sepia:
         if (metaTag) {
           metaTag.setAttribute('content', '#f6f1ea');
         }
-        // document.documentElement.style.setProperty('background-color', '#f6f1ea');
-        // document.documentElement.setAttribute('data-theme', 'sepia');
         setCurrentTheme('sepia');
         break;
     }
