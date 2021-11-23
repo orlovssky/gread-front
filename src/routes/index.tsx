@@ -1,5 +1,6 @@
 import Error404 from 'pages/Error404';
 import Home from 'pages/Home';
+import Link from 'pages/Link';
 import Profile from 'pages/Profile';
 import Signin from 'pages/Signin';
 import Signup from 'pages/Signup';
@@ -47,6 +48,16 @@ const AppRoutes = (): JSX.Element => {
         element={
           <RequireAuth>
             <Profile />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/link/:id"
+        element={
+          <RequireAuth>
+            <>
+              <Link />
+            </>
           </RequireAuth>
         }
       />
