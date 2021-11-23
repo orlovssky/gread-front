@@ -1,6 +1,7 @@
 {
 	"about": "О нас",
 	"authorization": "Авторизация",
+	"cancel": "Отмена",
 	"change": "Изменить",
 	"changePassword": "Изменить пароль",
 	"close": "Закрыть",
@@ -21,6 +22,7 @@
 	"link": "Ссылка",
 	"mode": "Режим",
 	"password": "Пароль",
+	"pleaseConfirm": "Пожалуйста, подтвердите Ваши действия ",
 	"profile": "Профиль",
 	"registration": "Регистрация",
 	"save": "Сохранить",
@@ -28,6 +30,7 @@
 	"settings": "Настройки",
 	"signIn": "Войти",
 	"signOut": "Выйти",
+	"signOutConfirmation": "Вы точно хотите выйти из профиля?",
 	"signUp": "Зарегистрироваться",
 	"success": "Успешно",
 	"theme": "Тема",

@@ -3,6 +3,7 @@ import { useForm } from '@mantine/hooks';
 import { useNotifications } from '@mantine/notifications';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 import ChangePasswordModal from 'components/profile/ChangePasswordModal';
+import ConfirmSignOutModal from 'components/profile/ConfirmSignOutModal';
 import { UserModel, UpdateUserModel } from 'models/user';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
@@ -16,6 +17,7 @@ const Profile = (): JSX.Element => {
   const notifications = useNotifications();
 
   const [loading, setLoading] = useState(false);
+  const [disableSave, setDisableSave] = useState(true);
 
   const [user, setUser] = useState<UserModel>({
     id: 0,
@@ -53,6 +55,17 @@ const Profile = (): JSX.Element => {
 
   useEffect(() => {
     form.resetErrors();
+    const { email, username, firstname, lastname } = form.values;
+    if (
+      email !== user.email ||
+      username !== user.username ||
+      firstname !== user.firstname ||
+      lastname !== user.lastname
+    ) {
+      setDisableSave(false);
+    } else {
+      setDisableSave(true);
+    }
   }, [form.values]);
 
   const onSubmit = () => {
@@ -90,7 +103,7 @@ const Profile = (): JSX.Element => {
   return (
     <>
       <ChangePasswordModal userId={user.id} />
-      <Paper radius={0} className="paper_full-height">
+      <Paper component="main" radius={0} className="paper_full-height">
         <Grid gutter={0} sx={{ width: '100%', marginTop: '60px' }}>
           <Col span={10} offset={1} sm={6} offsetSm={3} lg={4} offsetLg={4}>
             <form onSubmit={form.onSubmit(() => onSubmit())}>
@@ -128,15 +141,17 @@ const Profile = (): JSX.Element => {
                 disabled={loading}
               />
               <Button
-                mt="xs"
+                mt="md"
                 fullWidth
                 variant="light"
                 onClick={() => dispatch(setDialogOpened(true))}>
                 {t('changePassword')}
               </Button>
 
+              <ConfirmSignOutModal />
+
               <div style={{ width: '100%', textAlign: 'center' }}>
-                <Button type="submit" mt="xs" loading={loading}>
+                <Button type="submit" my="xs" loading={loading} disabled={disableSave}>
                   {t('save')}
                 </Button>
               </div>

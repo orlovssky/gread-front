@@ -10,23 +10,20 @@ const WelcomeTitle = (): JSX.Element => {
     t('welcome.songLyrics')
   ];
   return (
-    <Group direction="column" className="welcome__title" grow>
+    <Group direction="column" className="welcome__group" grow>
       <Text
+        className="welcome__title"
+        component="h1"
         variant="gradient"
         gradient={{ from: 'primary', to: 'primary', deg: 45 }}
         sx={{
-          color: '#CE1400'
+          margin: 0
         }}>
         Gread
       </Text>
       <div className="welcome__subtitle">
         <Text>{t('welcome.saveAllOfThe')}&nbsp;</Text>
-        <Text
-          variant="gradient"
-          gradient={{ from: 'primary', to: 'primary', deg: 45 }}
-          sx={{
-            color: '#CE1400'
-          }}>
+        <Text variant="gradient" gradient={{ from: 'primary', to: 'primary', deg: 45 }}>
           <Typewriter options={{ strings, autoStart: true, loop: true }} />
         </Text>
       </div>

@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { NotificationsProvider } from '@mantine/notifications';
 import Header from 'components/main/header';
 import SettingsDrawer from 'components/main/settings';
@@ -9,15 +10,18 @@ import './App.css';
 
 function App(): JSX.Element {
   const { theme } = useAppSelector((state) => state.mainTheme);
+
   return (
     <MantineProvider theme={theme}>
-      <NotificationsProvider>
-        <div className="App">
-          <SettingsDrawer />
-          <Header />
-          <Routes />
-        </div>
-      </NotificationsProvider>
+      <ModalsProvider>
+        <NotificationsProvider>
+          <div className="App">
+            <SettingsDrawer />
+            <Header />
+            <Routes />
+          </div>
+        </NotificationsProvider>
+      </ModalsProvider>
     </MantineProvider>
   );
 }

@@ -79,6 +79,7 @@ const SignUp = (): JSX.Element => {
 
   return (
     <Paper
+      component="main"
       radius={0}
       className="paper_full-height"
       sx={{

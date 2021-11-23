@@ -1,6 +1,7 @@
 {
 	"about": "About",
 	"authorization": "Authorization",
+	"cancel": "Cancel",
 	"change": "Change",
 	"changePassword": "Change password",
 	"close": "Close",
@@ -21,6 +22,7 @@
 	"link": "Link",
 	"mode": "Mode",
 	"password": "Password",
+	"pleaseConfirm": "Please confirm your action",
 	"profile": "Profile",
 	"registration": "Registration",
 	"save": "Save",
@@ -28,6 +30,7 @@
 	"settings": "Settings",
 	"signIn": "Sign in",
 	"signOut": "Sign out",
+	"signOutConfirmation": "Are you sure you want to sign out?",
 	"signUp": "Sign up",
 	"success": "Success",
 	"theme": "Theme",

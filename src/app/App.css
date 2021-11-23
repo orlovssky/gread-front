@@ -1,4 +1,17 @@
-.welcome__title {
+[data-theme='dark'] {
+  --bg-color: #1a1b1e;
+}
+[data-theme='light'] {
+  --bg-color: #ffffff;
+}
+[data-theme='sepia'] {
+  --bg-color: #f6f1ea;
+}
+:root {
+  background-color: var(--bg-color);
+}
+
+.welcome__group {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -6,7 +19,7 @@
   width: 100%;
   text-align: center;
 }
-.welcome__title > div:first-child {
+.welcome__title {
   font-size: calc(1rem + 8vw);
 }
 .welcome__subtitle > div {
@@ -18,7 +31,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .welcome__title > div:first-child {
+  .welcome__title {
     font-size: calc(1rem + 12vw);
   }
   .welcome__subtitle {
@@ -27,12 +40,12 @@
   }
 }
 
-@media only screen and (max-height: 350px) {
-  .welcome__title {
+@media only screen and (max-height: 400px) {
+  .welcome__group {
     top: 60px;
     transform: translateX(-50%);
   }
-  .welcome__title > div:first-child {
+  .welcome__title {
     font-size: calc(1rem + 6vw);
     font-weight: bold;
   }
@@ -51,10 +64,10 @@
   z-index: 6;
   position: fixed;
 }
+
 .paper_full-height {
   min-height: 100vh;
 }
-
 /* Safari only CSS hack */
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {

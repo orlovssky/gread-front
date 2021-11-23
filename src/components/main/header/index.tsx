@@ -1,4 +1,4 @@
-import { Group, Title, Container, ActionIcon } from '@mantine/core';
+import { Group, Title, Container, ActionIcon, Paper } from '@mantine/core';
 import { GearIcon, PersonIcon } from '@modulz/radix-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -23,41 +23,39 @@ const Header = (): JSX.Element => {
     }
   }, [location.pathname]);
   return (
-    <Container
-      className="header"
-      sx={(theme) => ({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white
-      })}>
-      <Group
-        sx={{
-          height: '60px',
-          justifyContent: 'space-between'
-        }}>
-        <Title
-          order={1}
+    <Paper component="header" className="header">
+      <Container>
+        <Group
           sx={{
-            cursor: 'pointer'
-          }}
-          onClick={() => goTo('')}>
-          Gread
-        </Title>
-        <Group>
-          {showProfileIcon && (
-            <ActionIcon color="primary" size="lg" radius="md" onClick={() => goTo('profile')}>
-              <PersonIcon />
-            </ActionIcon>
-          )}
+            height: '60px',
+            justifyContent: 'space-between'
+          }}>
+          <Title
+            order={1}
+            sx={{
+              cursor: 'pointer'
+            }}
+            onClick={() => goTo('')}>
+            Gread
+          </Title>
+          <Group>
+            {showProfileIcon && (
+              <ActionIcon color="primary" size="lg" radius="md" onClick={() => goTo('profile')}>
+                <PersonIcon />
+              </ActionIcon>
+            )}
 
-          <ActionIcon
-            color="primary"
-            size="lg"
-            radius="md"
-            onClick={() => dispatch(setSettingsOpened(true))}>
-            <GearIcon />
-          </ActionIcon>
+            <ActionIcon
+              color="primary"
+              size="lg"
+              radius="md"
+              onClick={() => dispatch(setSettingsOpened(true))}>
+              <GearIcon />
+            </ActionIcon>
+          </Group>
         </Group>
-      </Group>
-    </Container>
+      </Container>
+    </Paper>
   );
 };
 export default Header;

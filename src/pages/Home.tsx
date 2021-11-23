@@ -16,7 +16,7 @@ const Home = (): JSX.Element => {
   }, []);
 
   return (
-    <Paper radius={0} className="paper_full-height">
+    <Paper component="main" radius={0} className="paper_full-height">
       <Group
         direction="column"
         grow
