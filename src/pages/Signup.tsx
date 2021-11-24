@@ -60,6 +60,7 @@ const SignUp = (): JSX.Element => {
             message: t('success'),
             color: 'green'
           });
+          setLoading(false);
           goTo('');
         }
       })
@@ -70,10 +71,8 @@ const SignUp = (): JSX.Element => {
             color: 'red'
           });
         }
-        console.log(e.message);
-      })
-      .finally(() => {
         setLoading(false);
+        console.log(e.message);
       });
   };
 

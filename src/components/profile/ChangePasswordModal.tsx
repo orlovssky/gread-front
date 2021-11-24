@@ -3,7 +3,7 @@ import { useForm } from '@mantine/hooks';
 import { useNotifications } from '@mantine/notifications';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { updatePassword } from 'services/user';
+import { updatePasswordApi } from 'services/user';
 import { useAppSelector, useAppDispatch } from 'store/hooks';
 import { setDialogOpened } from 'store/modules/profile/changePasswordModal';
 
@@ -36,7 +36,7 @@ const ChangePasswordModal = (props: Props): JSX.Element => {
   const onSubmit = () => {
     setLoading(true);
 
-    updatePassword(form.values.password, props.userId)
+    updatePasswordApi(form.values.password, props.userId)
       .then(({ data }) => {
         if (data === 'success') {
           notifications.showNotification({
@@ -44,14 +44,13 @@ const ChangePasswordModal = (props: Props): JSX.Element => {
             color: 'green'
           });
           form.reset();
+          setLoading(false);
           dispatch(setDialogOpened(false));
         }
       })
       .catch((e) => {
-        console.log(e.message);
-      })
-      .finally(() => {
         setLoading(false);
+        console.log(e.message);
       });
   };
 

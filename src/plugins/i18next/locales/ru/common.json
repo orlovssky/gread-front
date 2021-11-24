@@ -9,8 +9,10 @@
 	"email": "Почта",
 	"error404": "Страница не найдена...",
 	"errors": {
+		"cannotReadLinkContent": "Не удалось считать контент ссылки",
 		"invalidData": "Неверные данные",
 		"invalidPassword": "Неверный пароль",
+		"linkNotFound": "Ссылка не найдена",
 		"userAlreadyExists": "Пользователь уже существует",
 		"userDoesNotExist": "Такой пользователь не создан"
 	},
@@ -22,9 +24,11 @@
 	"link": "Ссылка",
 	"mode": "Режим",
 	"password": "Пароль",
-	"pleaseConfirm": "Пожалуйста, подтвердите Ваши действия ",
+	"pleaseConfirm": "Пожалуйста, подтвердите Ваше действие",
 	"profile": "Профиль",
 	"registration": "Регистрация",
+	"remove": "Удалить",
+	"removeLinkConfirmation": "Вы точно хотите удалить ссылку?",
 	"save": "Сохранить",
 	"sepia": "Сепия",
 	"settings": "Настройки",

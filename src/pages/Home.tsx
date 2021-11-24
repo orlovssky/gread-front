@@ -7,7 +7,8 @@ import {
   Text,
   Avatar,
   TextInput,
-  ActionIcon
+  ActionIcon,
+  Loader
 } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import { ChevronRightIcon, BookmarkIcon, PlusIcon } from '@modulz/radix-icons';
@@ -17,8 +18,11 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { postLinkApi, getLinksApi } from 'services/link';
+import { useAppSelector, useAppDispatch } from 'store/hooks';
+import { setLinks, setLink as storeSetLink } from 'store/modules/link/links';
 
 const Home = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const notifications = useNotifications();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -26,14 +30,17 @@ const Home = (): JSX.Element => {
     navigate(`/${page}`);
   }
 
-  const [links, setLinks] = useState<LinkModel[]>([]);
+  const [loading, setLoading] = useState(false);
   const [showArrow, setShowArrow] = useState(0);
 
+  const { links } = useAppSelector((state) => state.linkLinks);
+
   useEffect(() => {
-    loadLinks();
+    if (links.length === 0) {
+      loadLinks();
+    }
   }, []);
 
-  const [loading, setLoading] = useState(false);
   const [link, setLink] = useState('');
 
   const onSubmit = () => {
@@ -52,6 +59,15 @@ const Home = (): JSX.Element => {
           }
         })
         .catch((e) => {
+          if (
+            e.response?.status === 409 &&
+            e.response?.data?.error === 'cannot parse content from link'
+          ) {
+            notifications.showNotification({
+              message: t('errors.cannotReadLinkContent'),
+              color: 'red'
+            });
+          }
           console.log(e.message);
         })
         .finally(() => {
@@ -61,11 +77,21 @@ const Home = (): JSX.Element => {
   };
 
   const loadLinks = () => {
-    getLinksApi().then(({ data }) => {
-      if (Array.isArray(data) && data.length) {
-        setLinks(data);
-      }
-    });
+    setLoading(true);
+    getLinksApi()
+      .then(({ data }) => {
+        if (Array.isArray(data) && data.length) {
+          dispatch(setLinks(data));
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const openLink = async (link: LinkModel) => {
+    await dispatch(storeSetLink(link));
+    goTo(`link/${link.id}`);
   };
 
   return (
@@ -94,6 +120,15 @@ const Home = (): JSX.Element => {
             <PlusIcon />
           </ActionIcon>
         </Container>
+        {loading && (
+          <Container
+            sx={{
+              textAlign: 'center'
+            }}
+            mb="md">
+            <Loader color="gray" variant="dots" />
+          </Container>
+        )}
         {links.map((link, index) => {
           return (
             <Container
@@ -106,7 +141,7 @@ const Home = (): JSX.Element => {
                 className="home__link"
                 onMouseEnter={() => setShowArrow(link.id)}
                 onMouseLeave={() => setShowArrow(0)}
-                onClick={() => goTo(`link/${link.id}`)}>
+                onClick={() => openLink(link)}>
                 <Avatar radius="xl" src={link.image} mr="md" />
                 <div style={{ width: '100%' }}>
                   <Title order={6}> {link.title}</Title>

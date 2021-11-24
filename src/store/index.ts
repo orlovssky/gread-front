@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import link from './modules/link';
 import main from './modules/main';
 import profile from './modules/profile';
 
 const store = configureStore({
   reducer: {
     ...main,
-    ...profile
+    ...profile,
+    ...link
   }
 });
 

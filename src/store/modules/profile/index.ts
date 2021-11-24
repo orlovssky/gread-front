@@ -1,5 +1,7 @@
 import profilechangePasswordModalReducer from './changePasswordModal';
+import profileReducer from './profile';
 
 export default {
-  profilechangePasswordModal: profilechangePasswordModalReducer
+  profilechangePasswordModal: profilechangePasswordModalReducer,
+  profile: profileReducer
 };

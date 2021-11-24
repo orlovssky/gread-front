@@ -9,8 +9,10 @@
 	"email": "Email",
 	"error404": "Oops. Nothing here...",
 	"errors": {
+		"cannotReadLinkContent": "Cannot read link content",
 		"invalidData": "Invalid data",
 		"invalidPassword": "Invalid password",
+		"linkNotFound": "The link not found",
 		"userAlreadyExists": "The user already exists",
 		"userDoesNotExist": "This user does not exist"
 	},
@@ -25,6 +27,8 @@
 	"pleaseConfirm": "Please confirm your action",
 	"profile": "Profile",
 	"registration": "Registration",
+	"remove": "Remove",
+	"removeLinkConfirmation": "Are you sure you want to remove link?",
 	"save": "Save",
 	"sepia": "Sepia",
 	"settings": "Settings",

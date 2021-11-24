@@ -1,15 +1,16 @@
-import { Paper, Grid, Col, TextInput, Button } from '@mantine/core';
+import { Paper, Grid, Col, TextInput, Button, Loader } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { useNotifications } from '@mantine/notifications';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 import ChangePasswordModal from 'components/profile/ChangePasswordModal';
 import ConfirmSignOutModal from 'components/profile/ConfirmSignOutModal';
-import { UserModel, UpdateUserModel } from 'models/user';
+import { UpdateUserModel } from 'models/user';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { getUser, updateUser } from 'services/user';
-import { useAppDispatch } from 'store/hooks';
+import { getUserApi, updateUserApi } from 'services/user';
+import { useAppSelector, useAppDispatch } from 'store/hooks';
 import { setDialogOpened } from 'store/modules/profile/changePasswordModal';
+import { setProfile } from 'store/modules/profile/profile';
 
 const Profile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -19,14 +20,7 @@ const Profile = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [disableSave, setDisableSave] = useState(true);
 
-  const [user, setUser] = useState<UserModel>({
-    id: 0,
-    username: '',
-    email: '',
-    password: '',
-    firstname: '',
-    lastname: ''
-  });
+  const { profile } = useAppSelector((state) => state.profile);
 
   const form = useForm({
     initialValues: {
@@ -45,22 +39,31 @@ const Profile = (): JSX.Element => {
   });
 
   useEffect(() => {
-    getUser().then(({ data }) => {
-      if (data) {
-        setUser(data);
-        form.setValues(data);
-      }
-    });
+    if (profile.id === 0) {
+      setLoading(true);
+      getUserApi()
+        .then(({ data }) => {
+          if (data) {
+            dispatch(setProfile(data));
+            form.setValues(data);
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      form.setValues(profile);
+    }
   }, []);
 
   useEffect(() => {
     form.resetErrors();
     const { email, username, firstname, lastname } = form.values;
     if (
-      email !== user.email ||
-      username !== user.username ||
-      firstname !== user.firstname ||
-      lastname !== user.lastname
+      email !== profile.email ||
+      username !== profile.username ||
+      firstname !== profile.firstname ||
+      lastname !== profile.lastname
     ) {
       setDisableSave(false);
     } else {
@@ -76,14 +79,14 @@ const Profile = (): JSX.Element => {
       firstname: firstname ? firstname : null,
       lastname: lastname ? lastname : null
     };
-    if (email !== user.email) {
+    if (email !== profile.email) {
       userForUpdate.email = email;
     }
-    if (username !== user.username) {
+    if (username !== profile.username) {
       userForUpdate.username = username ? username : null;
     }
 
-    updateUser(userForUpdate, user.id)
+    updateUserApi(userForUpdate, profile.id)
       .then(({ data }) => {
         if (data === 'success') {
           notifications.showNotification({
@@ -102,9 +105,23 @@ const Profile = (): JSX.Element => {
 
   return (
     <>
-      <ChangePasswordModal userId={user.id} />
+      <ChangePasswordModal userId={profile.id} />
       <Paper component="main" radius={0} className="paper_full-height">
         <Grid gutter={0} sx={{ width: '100%', paddingTop: '60px' }}>
+          {loading && (
+            <Col
+              span={10}
+              offset={1}
+              sm={6}
+              offsetSm={3}
+              lg={4}
+              offsetLg={4}
+              sx={{
+                textAlign: 'center'
+              }}>
+              <Loader color="gray" variant="dots" />
+            </Col>
+          )}
           <Col span={10} offset={1} sm={6} offsetSm={3} lg={4} offsetLg={4}>
             <form onSubmit={form.onSubmit(() => onSubmit())}>
               <TextInput
